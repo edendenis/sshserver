@@ -18,7 +18,7 @@ O `sshserver` no `Linux Ubuntu` é um servidor SSH (Secure Shell) que permite a 
 
 Para instalar e configurar um servidor `SSH` no `Linux Ubuntu`, você pode seguir estas etapas:
 
-1. Abra o terminal. Você pode fazer isso pressionando: `Ctrl + Alt + T`
+1. Abra o `Terminal Emulator`. Você pode fazer isso pressionando: `Ctrl + Alt + T`
 
 
 2. Certifique-se de que seu sistema esteja limpo e atualizado.
@@ -40,23 +40,28 @@ Para instalar e configurar um servidor `SSH` no `Linux Ubuntu`, você pode segui
     2.8 Realmente atualizar os pacotes instalados para as suas versões mais recentes, com base na última vez que você executou `sudo apt update`. Digite o seguinte comando e pressione `Enter`: `sudo apt full-upgrade -y`
     
 
-Para começar a usar o `SSH` e poder monitorar as tentativas de login, você precisa primeiro iniciar o serviço e, se desejar, habilitá-lo para que ele inicie automaticamente em futuras inicializações do sistema. Aqui estão os comandos que você pode usar: [3]
+Para começar a usar o `SSH` e poder monitorar as tentativas de _login_, você precisa primeiro iniciar o serviço e, se desejar, habilitá-lo para que ele inicie automaticamente em futuras inicializações do sistema. Aqui estão os comandos que você pode usar: [3]
 
-1. **Verificar se o SSH está ativo:** Mesmo que você tenha o `sshserver`, ele pode não estar ativo. Verifique o status usando: `sudo systemctl status ssh`
+1. **Instale o `openssh-server`**: Agora, instale o pacote `openssh-server`, que é o servidor SSH para o `Linux Ubuntu`: `sudo apt install openssh-server -y`
 
-    O status do serviço `SSH` (`ssh.service`) no seu sistema pode mostrar que está `"inactive (dead)"` e `"disabled"`, o que significa que o serviço não está atualmente em execução e também não está configurado para iniciar automaticamente na inicialização do sistema.
+    Isso instalará o servidor `SSH` e todas as dependências necessárias.
 
-2. **Iniciar o Serviço `SSH`:** Para iniciar o serviço `SSH` agora, execute: `sudo systemctl start ssh`
 
-3. **Habilitar o Serviço `SSH` na Inicialização:** Se você quiser que o `SSH` inicie automaticamente em cada reinicialização, use: `sudo systemctl enable ssh`
+2. **Verificar se o `SSH` está ativo:** Mesmo que você tenha o `sshserver`, ele pode não estar ativo. Verifique o _status_ usando: `sudo systemctl status ssh`
 
-4. **Verificar o Status Novamente:** Após iniciar o serviço, verifique o status novamente para confirmar que está ativo: `sudo systemctl status ssh`
+    O _status_ do serviço `SSH` (`ssh.service`) no seu sistema pode mostrar que está `"inactive (dead)"` e `"disabled"`, o que significa que o serviço não está atualmente em execução e também não está configurado para iniciar automaticamente na inicialização do sistema.
 
-5. **Monitorar Tentativas de Login:** Com o `SSH` ativo, as tentativas de login serão registradas. Você pode monitorá-las através do `journalctl`. Digite o seguinte comando: `sudo journalctl -u ssh`
+3. **Iniciar o serviço `SSH`:** Para iniciar o serviço `SSH` agora, execute: `sudo systemctl start ssh`
 
-    Para tentativas de login falhas, use: `sudo journalctl -u ssh | grep 'Failed'`
+4. **Habilitar o serviço `SSH` na inicialização:** Se você quiser que o `SSH` inicie automaticamente em cada reinicialização, use: `sudo systemctl enable ssh`
 
-Lembre-se de que o `SSH` é uma ferramenta poderosa, mas também um alvo comum para tentativas de acesso não autorizado. Certifique-se de seguir as práticas recomendadas de segurança, como usar autenticação baseada em chave, alterar a porta padrão do `SSH` e considerar o uso de ferramentas como o Fail2Ban para proteção adicional.
+5. **Verificar o _status_ novamente:** Após iniciar o serviço, verifique o status novamente para confirmar que está ativo: `sudo systemctl status ssh`
+
+6. **Monitorar tentativas de _login_:** Com o `SSH` ativo, as tentativas de _login_ serão registradas. Você pode monitorá-las através do `journalctl`. Digite o seguinte comando: `sudo journalctl -u ssh`
+
+    Para tentativas de _login_ falhas, use: `sudo journalctl -u ssh | grep 'Failed'`
+
+Lembre-se de que o `SSH` é uma ferramenta poderosa, mas também um alvo comum para tentativas de acesso não autorizado. Certifique-se de seguir as práticas recomendadas de segurança, como usar autenticação baseada em chave, alterar a porta padrão do `SSH` e considerar o uso de ferramentas como o `Fail2Ban` para proteção adicional.
 
 O `preset: disabled` na saída do comando `systemctl status` refere-se à configuração padrão (`preset`) do serviço no `systemd`, que é o sistema de `init` usado pelo seu `Linux Ubuntu` para gerenciar serviços de sistema.
 
@@ -72,14 +77,14 @@ Então, mesmo que o `preset` seja `disabled`, o seu serviço SSH está ativo (`a
 
 ## 2. Código completo para configurar/instalar/usar
 
-Para instalar o `sshserver` no `Linux Ubuntu` sem precisar digitar linha por linha, você pode seguir estas etapas:
+Para configurar/instalar/usar o `sshserver` no `Linux Ubuntu` sem precisar digitar linha por linha, você pode seguir estas etapas:
 
 1. Abra o `Terminal Emulator`. Você pode fazer isso pressionando: `Ctrl + Alt + T`
 
 2. Digite o seguinte comando e pressione `Enter`:
 
     ```
-    sudo apt clean                                                            
+    sudo apt clean
     sudo apt autoclean
     sudo apt autoremove -y
     sudo apt update
